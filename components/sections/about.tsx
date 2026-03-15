@@ -1,27 +1,14 @@
 "use client"
 
-import { motion } from "framer-motion"
-import { useInView } from "framer-motion"
+import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
 import { Download, Briefcase, GraduationCap, Award } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 const highlights = [
-  {
-    icon: Briefcase,
-    title: "3+ Years",
-    description: "Professional Experience",
-  },
-  {
-    icon: GraduationCap,
-    title: "CS Degree",
-    description: "Computer Science",
-  },
-  {
-    icon: Award,
-    title: "10+ Projects",
-    description: "Successfully Delivered",
-  },
+  { icon: Briefcase, title: "Final Year", description: "CS Engineering Student" },
+  { icon: GraduationCap, title: "Full Stack", description: "Specialized in Next.js & AI" },
+  { icon: Award, title: "10+ Projects", description: "From AI to Web Platforms" },
 ]
 
 export function About() {
@@ -29,85 +16,62 @@ export function About() {
   const isInView = useInView(ref, { once: true, margin: "-100px" })
 
   return (
-    <section id="about" className="py-24 px-4 sm:px-6 lg:px-8" ref={ref}>
-      <div className="max-w-6xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
-          className="mb-16"
-        >
-          <h2 className="text-sm font-semibold text-primary mb-2 tracking-wide uppercase">
-            About Me
-          </h2>
-          <p className="text-3xl sm:text-4xl font-bold text-foreground">
-            Get to know me
-          </p>
-        </motion.div>
-
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
+    <section id="about" className="py-32 px-6 lg:px-8 bg-transparent" ref={ref}>
+      <div className="max-w-7xl mx-auto">
+        <div className="grid lg:grid-cols-[1fr_0.8fr] gap-20 items-center">
+          
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
+            initial={{ opacity: 0, x: -30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className="space-y-6 text-muted-foreground leading-relaxed">
+            <h2 className="text-primary font-mono text-sm tracking-[0.3em] uppercase mb-6">// The Narrative</h2>
+            <p className="text-4xl sm:text-6xl font-bold tracking-tighter leading-[1.1] mb-10">
+              Transforming <span className="text-muted-foreground italic font-serif">complex data</span> into human experiences.
+            </p>
+            
+            <div className="space-y-6 text-muted-foreground text-lg leading-relaxed max-w-xl">
               <p>
-                I am a Full Stack Developer based in Mumbai with hands-on experience in building performant and maintainable web applications.
+                Based in <span className="text-foreground font-medium">Mumbai</span>, I am a final-year Computer Science engineer obsessed with the intersection of <span className="text-primary font-mono">AI</span> and <span className="text-primary font-mono">Web UI</span>.
               </p>
               <p>
-                I specialize in React, Next.js, TypeScript, and Node.js. I enjoy translating product ideas into clean UI and stable backend services.
-              </p>
-              <p>
-                Outside work, I focus on continuous learning and contributing to personal projects while valuing practical engineering and collaboration.
+                Whether it&apos;s building an AI-powered resume analyzer or architecting an Indian Census database query engine, I focus on performance, accessibility, and high-fidelity design.
               </p>
             </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              className="mt-8"
+            <Button
+              variant="outline"
+              className="mt-12 h-14 px-8 rounded-full border-white/10 hover:bg-white/5 gap-3 group transition-all"
+              asChild
             >
-              <Button
-                variant="outline"
-                className="gap-2 border-border hover:bg-secondary"
-                asChild
-              >
-                <a href="/resume.pdf" download>
-                  <Download size={18} />
-                  Download Resume
-                </a>
-              </Button>
-            </motion.div>
+              <a href="/resume.pdf" download>
+                <Download size={18} className="group-hover:translate-y-1 transition-transform" />
+                Download Curriculum Vitae
+              </a>
+            </Button>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="space-y-6"
-          >
+          {/* Highlights Bento Grid */}
+          <div className="grid grid-cols-1 gap-4">
             {highlights.map((item, index) => (
               <motion.div
                 key={item.title}
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={isInView ? { opacity: 1, scale: 1 } : {}}
                 transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
-                className="flex items-start gap-4 p-6 rounded-xl bg-card/50 border border-border/50 backdrop-blur-sm hover:border-primary/30 transition-colors"
+                className="group flex items-center gap-6 p-8 rounded-3xl bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.04] transition-all"
               >
-                <div className="p-3 rounded-lg bg-primary/10 text-primary">
-                  <item.icon size={24} />
+                <div className="p-4 rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-background transition-colors duration-500">
+                  <item.icon size={28} strokeWidth={1.5} />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-foreground text-lg">
-                    {item.title}
-                  </h3>
-                  <p className="text-muted-foreground">{item.description}</p>
+                  <h3 className="font-bold text-foreground text-xl tracking-tight">{item.title}</h3>
+                  <p className="text-muted-foreground font-mono text-xs uppercase tracking-widest mt-1">{item.description}</p>
                 </div>
               </motion.div>
             ))}
-          </motion.div>
+          </div>
+
         </div>
       </div>
     </section>

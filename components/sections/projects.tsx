@@ -1,195 +1,84 @@
 "use client"
 
-import { motion } from "framer-motion"
-import { useInView } from "framer-motion"
+import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
 import { ExternalLink, Github } from "lucide-react"
-import {
-  SiReact,
-  SiNextdotjs,
-  SiTypescript,
-  SiTailwindcss,
-  SiNodedotjs,
-  SiPostgresql,
-  SiStripe,
-} from "react-icons/si"
 import { Button } from "@/components/ui/button"
 
-const techIconMap: Record<string, React.ElementType> = {
-  React: SiReact,
-  "Next.js": SiNextdotjs,
-  TypeScript: SiTypescript,
-  "Tailwind CSS": SiTailwindcss,
-  "Node.js": SiNodedotjs,
-  PostgreSQL: SiPostgresql,
-  Stripe: SiStripe,
-}
-
-const projects = [
-  {
-    title: "ResMind – AI Resume Analyzer",
-    description:
-      "A professional full-stack AI platform that scores resumes against job descriptions with ATS-style insights.",
-    image: "/projects/resmind.jpg",
-    tech: ["React.js", "Tailwind CSS", "React Router", "Puter.js", "Web Application Development"],
-    github: "https://ai-resume-analyzer-theta-two.vercel.app/",
-    live: "https://ai-resume-analyzer-theta-two.vercel.app/",
-    featured: true,
-    highlights: [
-      "Integrated AI models for structured, actionable résumé feedback.",
-      "Implemented PDF-to-image preview and seamless comparison workflows.",
-      "Designed serverless architecture for professional scalability and performance.",
-    ],
-  },
-  {
-    title: "Real-Time Voice Agent – AI Interview Preparation",
-    description:
-      "A professional AI voice assistant for live interview practice with instant feedback and adaptive questioning.",
-    image: "/projects/voice-agent.jpg",
-    tech: ["Next.js", "Tailwind CSS", "Firebase", "Gemini API"],
-    github: "https://real-time-voice-agent.vercel.app/",
-    live: "https://real-time-voice-agent.vercel.app/",
-    featured: true,
-    highlights: [
-      "Built AI-powered interview simulations with context-aware response generation.",
-      "Developed responsive, accessible UI focusing on professional skill development.",
-      "Implemented Firebase auth and data management for secure user experience.",
-    ],
-  },
-  {
-    title: "SIES College Library Website – Digital Platform",
-    description:
-      "A professional library platform built to support 500+ students with a modern and responsive interface.",
-    image: "/projects/library.jpg",
-    tech: ["Node.js", "Tailwind CSS", "React"],
-    github: "https://siesgstlibrary.vercel.app/",
-    live: "https://siesgstlibrary.vercel.app/",
-    featured: true,
-    highlights: [
-      "Revamped UI/UX to lower support queries and elevate student experience.",
-      "Added announcements, resource downloads, and library information features.",
-      "Enhanced accessibility and performance for a large student audience.",
-    ],
-  },
-  {
-    title: "AI Cyber Laws Assistant – Legal Awareness Chatbot",
-    description:
-      "A professional AI chatbot offering accessible Indian cyber law guidance through natural language interaction.",
-    image: "/projects/cyber-law.jpg",
-    tech: ["Node.js", "Tailwind CSS", "OAuth", "AI Chatbot"],
-    github: "https://cyber-law-assistant.vercel.app/dashboard",
-    live: "https://cyber-law-assistant.vercel.app/dashboard",
-    featured: true,
-    highlights: [
-      "Built chatbot for simplified legal guidance and community engagement.",
-      "Implemented secure OAuth authentication and role-based community features.",
-      "Delivered clean responsive interface with cloud deployment best practices.",
-    ],
-  },
-]
+// ... (keep your techIconMap and projects array here)
 
 export function Projects() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
 
   return (
-    <section id="projects" className="py-24 px-4 sm:px-6 lg:px-8" ref={ref}>
-      <div className="max-w-6xl mx-auto">
+    <section id="projects" className="py-32 px-6 lg:px-8 bg-transparent" ref={ref}>
+      <div className="max-w-7xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
-          className="mb-16"
+          initial={{ opacity: 0, x: -20 }}
+          animate={isInView ? { opacity: 1, x: 0 } : {}}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-20"
         >
-          <h2 className="text-sm font-semibold text-primary mb-2 tracking-wide uppercase">
-            Featured Work
+          <h2 className="text-primary font-mono text-sm tracking-widest uppercase mb-4">
+            // Selected Works
           </h2>
-          <p className="text-3xl sm:text-4xl font-bold text-foreground">
-            Projects I've built
+          <p className="text-4xl sm:text-6xl font-bold tracking-tighter">
+            Digital <span className="text-muted-foreground">Solutions.</span>
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
           {projects.map((project, index) => (
             <motion.div
               key={project.title}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 40 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group relative rounded-2xl bg-card/50 border border-border/50 backdrop-blur-sm overflow-hidden hover:border-primary/30 transition-all"
+              transition={{ duration: 0.8, delay: index * 0.15, ease: [0.16, 1, 0.3, 1] }}
+              className="group relative flex flex-col rounded-3xl bg-white/[0.02] border border-white/[0.05] overflow-hidden hover:bg-white/[0.04] transition-colors duration-500"
             >
-              {project.featured && (
-                <span className="absolute top-4 right-4 z-10 rounded-full bg-primary/95 px-3 py-1.5 text-xs font-semibold text-primary-foreground shadow-lg">
-                  Featured
-                </span>
-              )}
-              <div className="relative h-48 overflow-hidden">
-                <img
+              {/* Image Container with Zoom Effect */}
+              <div className="relative aspect-video overflow-hidden">
+                <motion.img
                   src={project.image}
-                  alt={`${project.title} screenshot`}
-                  className="absolute inset-0 w-full h-full object-cover"
+                  alt={project.title}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/10" />
-                <div className="absolute inset-0 bg-background/80 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
-                  <Button
-                    size="sm"
-                    variant="secondary"
-                    className="gap-2"
-                    asChild
-                  >
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Github size={16} />
-                      Code
-                    </a>
-                  </Button>
-                  <Button size="sm" className="gap-2" asChild>
-                    <a
-                      href={project.live}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <ExternalLink size={16} />
-                      Demo
-                    </a>
-                  </Button>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#030303] via-transparent to-transparent opacity-60" />
+                
+                {/* Floating Tags */}
+                <div className="absolute top-4 left-4 flex gap-2">
+                  {project.featured && (
+                    <span className="px-3 py-1 rounded-full bg-primary/20 backdrop-blur-md border border-primary/20 text-[10px] font-bold uppercase tracking-wider text-primary">
+                      Featured
+                    </span>
+                  )}
                 </div>
               </div>
 
-              {/* Project Info */}
-              <div className="p-6">
-                <h3 className="text-xl font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
-                  {project.title}
-                </h3>
-                <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
+              {/* Content */}
+              <div className="p-8 flex flex-col flex-grow">
+                <div className="flex justify-between items-start mb-4">
+                  <h3 className="text-2xl font-bold tracking-tight group-hover:text-primary transition-colors">
+                    {project.title}
+                  </h3>
+                  <div className="flex gap-3">
+                    <a href={project.github} target="_blank" className="text-muted-foreground hover:text-foreground transition-colors"><Github size={20} strokeWidth={1.5} /></a>
+                    <a href={project.live} target="_blank" className="text-muted-foreground hover:text-foreground transition-colors"><ExternalLink size={20} strokeWidth={1.5} /></a>
+                  </div>
+                </div>
+
+                <p className="text-muted-foreground leading-relaxed mb-6 text-sm lg:text-base">
                   {project.description}
                 </p>
-                {project.highlights && (
-                  <ul className="text-sm text-muted-foreground mb-4 space-y-1">
-                    {project.highlights.map((item) => (
-                      <li key={item} className="flex items-start gap-2">
-                        <span className="text-primary">•</span>
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-                <div className="flex flex-wrap gap-2">
-                  {project.tech.map((tech) => {
-                    const Icon = techIconMap[tech]
-                    return (
-                      <span
-                        key={tech}
-                        className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-secondary/50 text-xs text-muted-foreground"
-                      >
-                        {Icon && <Icon size={12} />}
-                        {tech}
-                      </span>
-                    )
-                  })}
+
+                {/* Modern Tech Pill Style */}
+                <div className="mt-auto flex flex-wrap gap-2">
+                  {project.tech.slice(0, 4).map((tech) => (
+                    <span key={tech} className="text-[11px] font-medium px-2.5 py-1 rounded-md bg-white/[0.05] border border-white/[0.05] text-muted-foreground">
+                      {tech}
+                    </span>
+                  ))}
                 </div>
               </div>
             </motion.div>

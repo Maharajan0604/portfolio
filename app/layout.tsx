@@ -2,6 +2,9 @@ import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { SmoothScroll } from '@/components/smooth-scroll'
+import { CustomCursor } from '@/components/ui/custom-cursor'
+import { Navbar } from '@/components/navbar'
+import { AnimatedBackground } from '@/components/animated-background'
 import './globals.css'
 
 const inter = Inter({ 
@@ -11,32 +14,14 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: 'Maharajan Konar | Full Stack Developer',
-  description: 'Maharajan Konar - Full Stack Developer from Mumbai, building robust web applications with React, Next.js and Node.js.',
-  keywords: ['Maharajan Konar', 'Full Stack Developer', 'React', 'Next.js', 'Node.js', 'Portfolio'],
+  description: 'Maharajan Konar - Full Stack Developer from Mumbai, specializing in React, Next.js, and AI-driven solutions.',
+  keywords: ['Maharajan Konar', 'Full Stack Developer', 'React', 'Next.js', 'AI Engineering', 'Mumbai'],
   authors: [{ name: 'Maharajan Konar' }],
   creator: 'Maharajan Konar',
-  openGraph: {
-    type: 'website',
-    locale: 'en_US',
-    url: 'https://yourwebsite.com',
-    siteName: 'Maharajan Konar - Portfolio',
-    title: 'Maharajan Konar | Full Stack Developer',
-    description: 'Maharajan Konar - Full Stack Developer from Mumbai, building robust web applications with React, Next.js and Node.js.',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Maharajan Konar | Full Stack Developer',
-    description: 'Maharajan Konar - Full Stack Developer from Mumbai, building robust web applications with React, Next.js and Node.js.',
-    creator: '@maharajan_konar',
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
 }
 
 export const viewport: Viewport = {
-  themeColor: '#0f1219',
+  themeColor: '#030303',
   width: 'device-width',
   initialScale: 1,
 }
@@ -48,9 +33,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className={`${inter.variable} font-sans antialiased bg-background text-foreground`}>
+      <body className={`${inter.variable} font-sans antialiased bg-background text-foreground selection:bg-primary selection:text-primary-foreground`}>
+        <CustomCursor />
+        <AnimatedBackground />
         <SmoothScroll>
-          {children}
+          <Navbar />
+          <main className="relative z-10">
+            {children}
+          </main>
         </SmoothScroll>
         <Analytics />
       </body>

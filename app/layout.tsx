@@ -1,46 +1,36 @@
-import type { Metadata, Viewport } from 'next'
-import { Inter } from 'next/font/google'
-import { Analytics } from '@vercel/analytics/next'
-import { SmoothScroll } from '@/components/smooth-scroll'
-import { CustomCursor } from '@/components/ui/custom-cursor'
-import { Navbar } from '@/components/navbar'
-import { AnimatedBackground } from '@/components/animated-background'
-import './globals.css'
-
-const inter = Inter({ 
-  subsets: ["latin"],
-  variable: '--font-inter'
-});
+import type { Metadata } from "next"
+import "./globals.css"
+import { SmoothScroll } from "@/components/smooth-scroll"
+import { CustomCursor } from "@/components/custom-cursor"
+import { Analytics } from "@vercel/analytics/react"
 
 export const metadata: Metadata = {
-  title: 'Maharajan Konar | Full Stack Developer',
-  description: 'Maharajan Konar - Full Stack Developer from Mumbai, specializing in React, Next.js, and AI-driven solutions.',
-  keywords: ['Maharajan Konar', 'Full Stack Developer', 'React', 'Next.js', 'AI Engineering', 'Mumbai'],
-  authors: [{ name: 'Maharajan Konar' }],
-  creator: 'Maharajan Konar',
-}
-
-export const viewport: Viewport = {
-  themeColor: '#030303',
-  width: 'device-width',
-  initialScale: 1,
+  title: "Maharajan Konar — Full Stack Engineer",
+  description: "CS Engineer specializing in Full Stack, Cloud, and AI. Building digital experiences that matter.",
+  keywords: ["Full Stack Engineer", "React", "Node.js", "AWS", "AI", "Maharajan Konar"],
+  authors: [{ name: "Maharajan Konar" }],
+  openGraph: {
+    title: "Maharajan Konar — Full Stack Engineer",
+    description: "CS Engineer specializing in Full Stack, Cloud, and AI.",
+    type: "website",
+  },
 }
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode
-}>) {
+}) {
   return (
-    <html lang="en" className="dark">
-      <body className={`${inter.variable} font-sans antialiased bg-background text-foreground selection:bg-primary selection:text-primary-foreground`}>
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      </head>
+      <body>
         <CustomCursor />
-        <AnimatedBackground />
         <SmoothScroll>
-          <Navbar />
-          <main className="relative z-10">
-            {children}
-          </main>
+          {children}
         </SmoothScroll>
         <Analytics />
       </body>

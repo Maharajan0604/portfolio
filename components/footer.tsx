@@ -1,79 +1,92 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Github, Linkedin, Mail } from "lucide-react"
+import { Github, Linkedin, Mail, ArrowUp } from "lucide-react"
 
-const socialLinks = [
+const links = [
+  { label: "About", href: "#about" },
+  { label: "Skills", href: "#skills" },
+  { label: "Projects", href: "#projects" },
+  { label: "Experience", href: "#experience" },
+  { label: "Contact", href: "#contact" },
+]
+
+const socials = [
   { icon: Github, href: "https://github.com/Maharajan0604", label: "GitHub" },
   { icon: Linkedin, href: "https://www.linkedin.com/in/maharajan0604", label: "LinkedIn" },
   { icon: Mail, href: "mailto:0604maharaja@gmail.com", label: "Email" },
 ]
 
 export function Footer() {
-  const currentYear = new Date().getFullYear();
-
   return (
-    <footer className="py-12 px-6 lg:px-8 border-t border-white/5 bg-transparent">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-          
-          {/* Brand & Rights */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="flex flex-col items-center md:items-start gap-2"
-          >
-            <p className="text-sm font-bold tracking-tighter uppercase">
-              Maharajan <span className="text-muted-foreground font-medium italic font-serif">Konar</span>
-            </p>
-            <p className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest">
-              © {currentYear} All Rights Reserved
-            </p>
-          </motion.div>
+    <footer className="relative pt-16 pb-10 px-6 overflow-hidden">
+      {/* Top divider */}
+      <div className="divider-gold mb-12" />
 
-          {/* Location & Status (Premium Touch) */}
-          <motion.div 
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="hidden lg:flex flex-col items-center gap-1"
-          >
-            <div className="flex items-center gap-2">
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-primary"></span>
-              </span>
-              <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-foreground">Mumbai, IN</p>
+      <div className="max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-12 mb-12">
+          {/* Brand */}
+          <div>
+            <div className="font-display text-4xl font-light text-gold mb-3 tracking-widest">MK</div>
+            <p className="text-sm text-muted-foreground font-light leading-relaxed max-w-xs">
+              Full Stack Engineer crafting exceptional digital experiences with precision and purpose.
+            </p>
+          </div>
+
+          {/* Nav links */}
+          <div>
+            <p className="section-label mb-5">Navigation</p>
+            <ul className="space-y-3">
+              {links.map((link) => (
+                <li key={link.label}>
+                  <a
+                    href={link.href}
+                    className="link-gold text-sm text-muted-foreground hover:text-[oklch(0.78_0.12_78)] transition-colors duration-300"
+                    onClick={(e) => {
+                      e.preventDefault()
+                      document.querySelector(link.href)?.scrollIntoView({ behavior: "smooth" })
+                    }}
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Social + CTA */}
+          <div>
+            <p className="section-label mb-5">Connect</p>
+            <div className="flex flex-col gap-4">
+              {socials.map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="link-gold inline-flex items-center gap-3 text-sm text-muted-foreground hover:text-[oklch(0.78_0.12_78)] transition-colors duration-300"
+                >
+                  <s.icon size={15} strokeWidth={1.5} />
+                  {s.label}
+                </a>
+              ))}
             </div>
-            <p className="text-[9px] font-mono text-muted-foreground uppercase">Available Worldwide</p>
-          </motion.div>
+          </div>
+        </div>
 
-          {/* Socials */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="flex items-center gap-2"
+        {/* Bottom bar */}
+        <div className="divider-gold mb-8" />
+        <div className="flex items-center justify-between flex-wrap gap-4">
+          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+            © {new Date().getFullYear()} Maharajan Konar — Crafted with precision
+          </p>
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            className="group flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground hover:text-[oklch(0.78_0.12_78)] transition-colors duration-300"
           >
-            {socialLinks.map((link) => (
-              <motion.a
-                key={link.label}
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 rounded-full text-muted-foreground hover:text-primary hover:bg-white/5 transition-all"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                aria-label={link.label}
-              >
-                <link.icon size={18} strokeWidth={1.5} />
-              </motion.a>
-            ))}
-          </motion.div>
-
+            Back to top
+            <ArrowUp size={12} className="group-hover:-translate-y-0.5 transition-transform duration-200" />
+          </button>
         </div>
       </div>
     </footer>

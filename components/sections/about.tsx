@@ -1,79 +1,104 @@
 "use client"
 
-import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
-import { Download, Briefcase, GraduationCap, Award } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { motion, useInView } from "framer-motion"
 
-const highlights = [
-  { icon: Briefcase, title: "Final Year", description: "CS Engineering Student" },
-  { icon: GraduationCap, title: "Full Stack", description: "Specialized in Next.js & AI" },
-  { icon: Award, title: "10+ Projects", description: "From AI to Web Platforms" },
+const traits = [
+  { label: "Full Stack Engineering", desc: "End-to-end product development — from databases to pixel-perfect UIs." },
+  { label: "Cloud & DevOps", desc: "Docker. Scalable infrastructure built to last." },
+  { label: "AI Integration", desc: "Embedding LLMs, RAG pipelines, and intelligent features into real products." },
 ]
 
 export function About() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "-100px" })
+  const ref = useRef<HTMLDivElement>(null)
+  const inView = useInView(ref, { once: true, margin: "-15% 0px" })
+
+  const container = {
+    hidden: {},
+    visible: { transition: { staggerChildren: 0.1 } },
+  }
+  const fadeUp = {
+    hidden: { opacity: 0, y: 32 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] } },
+  }
 
   return (
-    <section id="about" className="py-32 px-6 lg:px-8 bg-transparent" ref={ref}>
-      <div className="max-w-7xl mx-auto">
-        <div className="grid lg:grid-cols-[1fr_0.8fr] gap-20 items-center">
-          
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <h2 className="text-primary font-mono text-sm tracking-[0.3em] uppercase mb-6">// The Narrative</h2>
-            <p className="text-4xl sm:text-6xl font-bold tracking-tighter leading-[1.1] mb-10">
-              Transforming <span className="text-muted-foreground italic font-serif">complex data</span> into human experiences.
-            </p>
-            
-            <div className="space-y-6 text-muted-foreground text-lg leading-relaxed max-w-xl">
-              <p>
-                Based in <span className="text-foreground font-medium">Mumbai</span>, I am a final-year Computer Science engineer obsessed with the intersection of <span className="text-primary font-mono">AI</span> and <span className="text-primary font-mono">Web UI</span>.
-              </p>
-              <p>
-                Whether it&apos;s building an AI-powered resume analyzer or architecting an Indian Census database query engine, I focus on performance, accessibility, and high-fidelity design.
-              </p>
-            </div>
+    <section id="about" className="relative py-32 px-6 overflow-hidden">
+      {/* Background accent */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-24 bg-gradient-to-b from-transparent to-[oklch(0.78_0.12_78/0.4)]" />
 
-            <Button
-              variant="outline"
-              className="mt-12 h-14 px-8 rounded-full border-white/10 hover:bg-white/5 gap-3 group transition-all"
-              asChild
-            >
-              <a href="/resume.pdf" download>
-                <Download size={18} className="group-hover:translate-y-1 transition-transform" />
-                Download Curriculum Vitae
-              </a>
-            </Button>
+      <motion.div
+        ref={ref}
+        variants={container}
+        initial="hidden"
+        animate={inView ? "visible" : "hidden"}
+        className="max-w-6xl mx-auto"
+      >
+        {/* Header */}
+        <motion.div variants={fadeUp} className="mb-20 text-center">
+          <p className="section-label mb-4">01 — About</p>
+          <h2 className="font-display text-[clamp(2.5rem,6vw,5rem)] font-light leading-tight text-foreground/90">
+            Crafting software that
+            <br />
+            <em className="text-gold not-italic">matters</em>
+          </h2>
+        </motion.div>
+
+        {/* Main content */}
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start">
+          {/* Left — narrative */}
+          <motion.div variants={fadeUp} className="space-y-6">
+            <p className="text-lg text-muted-foreground leading-relaxed font-light">
+              I&apos;m a Computer Science Engineer with a passion for building systems that are as elegant under the hood as they are on the surface. Currently based in India, working with teams globally.
+            </p>
+            <p className="text-base text-muted-foreground leading-relaxed font-light">
+              My approach combines rigorous engineering principles with an obsession for user experience. I believe great software is invisible — it just works, beautifully and reliably.
+            </p>
+            <p className="text-base text-muted-foreground leading-relaxed font-light">
+              Beyond code, I explore the intersection of artificial intelligence and human interaction — building tools that augment human capability rather than replace it.
+            </p>
+
+            {/* Signature ornament */}
+            <div className="pt-4">
+              <div className="font-display text-3xl font-light text-gold italic">Maharajan K.</div>
+              <div className="h-[1px] w-32 mt-2 bg-gradient-to-r from-[oklch(0.78_0.12_78/0.6)] to-transparent" />
+            </div>
           </motion.div>
 
-          {/* Highlights Bento Grid */}
-          <div className="grid grid-cols-1 gap-4">
-            {highlights.map((item, index) => (
+          {/* Right — traits */}
+          <motion.div variants={fadeUp} className="space-y-4">
+            {traits.map((trait, i) => (
               <motion.div
-                key={item.title}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
-                className="group flex items-center gap-6 p-8 rounded-3xl bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.04] transition-all"
+                key={trait.label}
+                variants={fadeUp}
+                className="group glass-gold rounded-xl p-5 cursor-default transition-all duration-300 hover:border-[oklch(0.78_0.12_78/0.35)]"
               >
-                <div className="p-4 rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-background transition-colors duration-500">
-                  <item.icon size={28} strokeWidth={1.5} />
-                </div>
-                <div>
-                  <h3 className="font-bold text-foreground text-xl tracking-tight">{item.title}</h3>
-                  <p className="text-muted-foreground font-mono text-xs uppercase tracking-widest mt-1">{item.description}</p>
+                <div className="flex items-start gap-4">
+                  <div
+                    className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-[11px] font-mono font-medium"
+                    style={{
+                      background: "oklch(0.78 0.12 78 / 0.1)",
+                      color: "oklch(0.78 0.12 78)",
+                      border: "1px solid oklch(0.78 0.12 78 / 0.3)",
+                    }}
+                  >
+                    {String(i + 1).padStart(2, "0")}
+                  </div>
+                  <div>
+                    <h3 className="font-sans font-medium text-foreground/90 mb-1 group-hover:text-[oklch(0.78_0.12_78)] transition-colors duration-300">
+                      {trait.label}
+                    </h3>
+                    <p className="text-sm text-muted-foreground font-light leading-relaxed">{trait.desc}</p>
+                  </div>
                 </div>
               </motion.div>
             ))}
-          </div>
-
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
+
+      {/* Bottom divider */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-px h-24 bg-gradient-to-b from-[oklch(0.78_0.12_78/0.3)] to-transparent" />
     </section>
   )
 }

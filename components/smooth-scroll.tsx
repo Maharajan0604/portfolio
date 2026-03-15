@@ -1,16 +1,32 @@
-// app/layout.tsx
-import { SmoothScroll } from "@/components/smooth-scroll"
+"use client"
 
-export default function RootLayout({ children }) {
-  return (
-    <html lang="en" className="dark">
-      <body className={`${fontSans.variable} ${fontMono.variable}`}>
-        <SmoothScroll>
-          <Navbar />
-          <main>{children}</main>
-          <Footer />
-        </SmoothScroll>
-      </body>
-    </html>
-  )
+import { useEffect, useRef } from "react"
+import Lenis from "lenis"
+
+export function SmoothScroll({ children }: { children: React.ReactNode }) {
+  const lenisRef = useRef<Lenis | null>(null)
+
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.4,
+      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: "vertical",
+      smoothWheel: true,
+    })
+
+    lenisRef.current = lenis
+
+    function raf(time: number) {
+      lenis.raf(time)
+      requestAnimationFrame(raf)
+    }
+
+    requestAnimationFrame(raf)
+
+    return () => {
+      lenis.destroy()
+    }
+  }, [])
+
+  return <>{children}</>
 }

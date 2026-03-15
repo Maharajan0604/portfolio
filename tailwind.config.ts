@@ -1,20 +1,13 @@
 import type { Config } from "tailwindcss"
 
+// In Tailwind v4, ALL theme config lives in globals.css via @theme {}
+// This file only needs content paths
 const config: Config = {
-  darkMode: "class",
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  theme: {
-    extend: {
-      fontFamily: {
-        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
-      },
-    },
-  },
-  plugins: [],
 }
 
 export default config

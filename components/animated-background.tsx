@@ -11,6 +11,7 @@ interface Particle {
   opacity: number
   life: number
   maxLife: number
+  hue: number   // 195–210 cyan range
 }
 
 export function AnimatedBackground() {
@@ -26,73 +27,89 @@ export function AnimatedBackground() {
     let particles: Particle[] = []
     let W = 0, H = 0
 
+    /* ── Resize ── */
     const resize = () => {
-      W = canvas.width = window.innerWidth
+      W = canvas.width  = window.innerWidth
       H = canvas.height = window.innerHeight
     }
     resize()
     window.addEventListener("resize", resize)
 
-    // Spawn particles
+    /* ── Spawn a single particle ── */
     const spawn = (): Particle => ({
-      x: Math.random() * W,
-      y: Math.random() * H,
-      vx: (Math.random() - 0.5) * 0.3,
-      vy: -Math.random() * 0.4 - 0.1,
-      size: Math.random() * 1.5 + 0.3,
+      x:       Math.random() * W,
+      y:       Math.random() * H,
+      vx:      (Math.random() - 0.5) * 0.25,
+      vy:      -Math.random() * 0.35 - 0.08,
+      size:    Math.random() * 1.4 + 0.2,
       opacity: 0,
-      life: 0,
-      maxLife: Math.random() * 300 + 200,
+      life:    0,
+      maxLife: Math.random() * 320 + 180,
+      hue:     195 + Math.random() * 20,          // cyan 195 – 215
     })
 
-    for (let i = 0; i < 60; i++) {
+    /* Seed with spread-out life values so they don't all fade at once */
+    for (let i = 0; i < 70; i++) {
       const p = spawn()
       p.life = Math.random() * p.maxLife
       particles.push(p)
     }
 
+    /* ── Draw loop ── */
     const draw = () => {
       ctx.clearRect(0, 0, W, H)
 
-      // Deep vignette
-      const vignette = ctx.createRadialGradient(W/2, H/2, 0, W/2, H/2, Math.max(W, H) * 0.7)
+      /* ── 1. Deep vignette ── */
+      const vignette = ctx.createRadialGradient(
+        W / 2, H / 2, 0,
+        W / 2, H / 2, Math.max(W, H) * 0.72
+      )
       vignette.addColorStop(0, "transparent")
-      vignette.addColorStop(1, "oklch(0.04 0.002 260 / 0.6)")
+      vignette.addColorStop(1, "rgba(7, 8, 18, 0.65)")
       ctx.fillStyle = vignette
       ctx.fillRect(0, 0, W, H)
 
-      // Gold orb top-right
-      const orb1 = ctx.createRadialGradient(W * 0.85, H * 0.1, 0, W * 0.85, H * 0.1, W * 0.35)
-      orb1.addColorStop(0, "oklch(0.78 0.12 78 / 0.06)")
+      /* ── 2. Cyan orb — top centre ── */
+      const orb1 = ctx.createRadialGradient(W * 0.50, -H * 0.05, 0, W * 0.50, -H * 0.05, W * 0.55)
+      orb1.addColorStop(0, "rgba(0, 210, 255, 0.055)")
       orb1.addColorStop(1, "transparent")
       ctx.fillStyle = orb1
       ctx.fillRect(0, 0, W, H)
 
-      // Gold orb bottom-left
-      const orb2 = ctx.createRadialGradient(W * 0.1, H * 0.85, 0, W * 0.1, H * 0.85, W * 0.3)
-      orb2.addColorStop(0, "oklch(0.78 0.12 78 / 0.04)")
+      /* ── 3. Cyan orb — bottom left ── */
+      const orb2 = ctx.createRadialGradient(W * 0.08, H * 0.90, 0, W * 0.08, H * 0.90, W * 0.32)
+      orb2.addColorStop(0, "rgba(0, 200, 240, 0.04)")
       orb2.addColorStop(1, "transparent")
       ctx.fillStyle = orb2
       ctx.fillRect(0, 0, W, H)
 
-      // Particles
+      /* ── 4. Green orb — bottom right ── */
+      const orb3 = ctx.createRadialGradient(W * 0.92, H * 0.88, 0, W * 0.92, H * 0.88, W * 0.28)
+      orb3.addColorStop(0, "rgba(0, 220, 130, 0.03)")
+      orb3.addColorStop(1, "transparent")
+      ctx.fillStyle = orb3
+      ctx.fillRect(0, 0, W, H)
+
+      /* ── 5. Particles ── */
       particles.forEach((p, i) => {
         p.life++
         p.x += p.vx
         p.y += p.vy
 
         const progress = p.life / p.maxLife
-        p.opacity = progress < 0.2
-          ? progress / 0.2
-          : progress > 0.8
-          ? 1 - (progress - 0.8) / 0.2
-          : 1
+        p.opacity =
+          progress < 0.15
+            ? progress / 0.15
+            : progress > 0.78
+            ? 1 - (progress - 0.78) / 0.22
+            : 1
 
         if (p.life >= p.maxLife) particles[i] = spawn()
 
         ctx.beginPath()
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
-        ctx.fillStyle = `oklch(0.82 0.10 78 / ${p.opacity * 0.35})`
+        // Use actual CSS-parseable color string
+        ctx.fillStyle = `hsla(${p.hue}, 85%, 65%, ${p.opacity * 0.30})`
         ctx.fill()
       })
 

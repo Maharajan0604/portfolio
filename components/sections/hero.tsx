@@ -2,7 +2,7 @@
 
 import { useRef, useState, useCallback, useEffect } from "react"
 import { motion } from "framer-motion"
-import { Github, Linkedin, Mail, ArrowDown, Terminal } from "lucide-react"
+import { Github, Linkedin, Mail, ArrowDown, Terminal, Download } from "lucide-react"
 
 const socialLinks = [
   { icon: Github,   href: "https://github.com/Maharajan0604",          label: "GitHub"   },
@@ -64,9 +64,9 @@ function TerminalCard() {
   const [step, setStep] = useState(0)
 
   const lines = [
-    { prompt: "~", cmd: "whoami",               out: "maharajan_konar"             },
-    { prompt: "~", cmd: "cat stack.txt",         out: "React · Next · Node · AWS · AI" },
-    { prompt: "~", cmd: "git log --oneline -1",  out: "🟢  open to work"            },
+    { prompt: "~", cmd: "whoami",              out: "maharajan_konar"                 },
+    { prompt: "~", cmd: "cat stack.txt",        out: "React · Next · Node · AWS · AI" },
+    { prompt: "~", cmd: "git log --oneline -1", out: "🟢  open to work"               },
   ]
 
   useEffect(() => {
@@ -94,8 +94,6 @@ function TerminalCard() {
             <div className="pl-6 text-[oklch(0.60_0.015_220)] text-[11px]">{line.out}</div>
           </motion.div>
         ))}
-
-        {/* Blinking cursor */}
         {step <= lines.length && (
           <div className="flex items-center gap-2">
             <span className="text-[oklch(0.78_0.18_150)] text-[11px]">❯</span>
@@ -126,7 +124,6 @@ function CornerBracket({ className }: { className?: string }) {
 /* ── Main component ────────────────────────────────── */
 export function Hero() {
   const btn1 = useMagnetic()
-  const btn2 = useMagnetic()
   const [mounted, setMounted] = useState(false)
   useEffect(() => setMounted(true), [])
 
@@ -144,7 +141,7 @@ export function Hero() {
       id="hero"
       className="relative min-h-[100svh] flex items-center justify-center px-6 overflow-hidden"
     >
-      {/* ── Radial glow behind content ── */}
+      {/* ── Radial glow ── */}
       <div
         aria-hidden="true"
         className="absolute inset-0 z-0"
@@ -192,9 +189,7 @@ export function Hero() {
             className="font-display font-bold leading-[0.95] tracking-[-0.04em]"
             style={{ fontSize: "clamp(3.2rem, 11vw, 8.5rem)" }}
           >
-            <span className="block text-[oklch(0.92_0.005_220)]">
-              Maharajan
-            </span>
+            <span className="block text-[oklch(0.92_0.005_220)]">Maharajan</span>
             <span
               className="block"
               style={{
@@ -210,15 +205,11 @@ export function Hero() {
         </motion.div>
 
         {/* ── Role subtitle ── */}
-        <motion.div variants={item} className="flex items-center justify-center gap-4 mb-8">
+        <motion.div variants={item} className="flex items-center justify-center gap-4 mb-8 flex-wrap">
           <div className="h-px w-10 bg-gradient-to-r from-transparent to-[oklch(0.80_0.15_200/0.45)]" />
-          <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-[oklch(0.55_0.015_220)]">
-            {"// "}
-          </span>
+          <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-[oklch(0.55_0.015_220)]">{"// "}</span>
           <CyclingRole />
-          <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-[oklch(0.55_0.015_220)]">
-            {"// "}
-          </span>
+          <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-[oklch(0.55_0.015_220)]">{"// "}</span>
           <div className="h-px w-10 bg-gradient-to-l from-transparent to-[oklch(0.80_0.15_200/0.45)]" />
         </motion.div>
 
@@ -228,10 +219,8 @@ export function Hero() {
           className="text-base sm:text-[1.05rem] text-[oklch(0.50_0.015_220)] max-w-lg mx-auto mb-12 leading-relaxed font-sans"
         >
           CS Engineer turning complex systems into{" "}
-          <span className="text-[oklch(0.80_0.15_200)] font-medium">
-            intuitive experiences
-          </span>
-          . Obsessed with clean architecture, fast UIs, and shipping things that matter.
+          <span className="text-[oklch(0.80_0.15_200)] font-medium">intuitive experiences</span>.{" "}
+          Obsessed with clean architecture, fast UIs, and shipping things that matter.
         </motion.p>
 
         {/* ── CTA Buttons ── */}
@@ -239,7 +228,7 @@ export function Hero() {
           variants={item}
           className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-14"
         >
-          {/* Primary */}
+          {/* Primary — View Projects */}
           <motion.div
             ref={btn1.ref}
             onMouseMove={btn1.onMove}
@@ -249,7 +238,7 @@ export function Hero() {
           >
             <button
               onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
-              className="group relative h-13 px-9 rounded-full overflow-hidden font-mono text-[11px] uppercase tracking-[0.18em] transition-all duration-300"
+              className="group relative px-9 py-4 rounded-full overflow-hidden font-mono text-[11px] uppercase tracking-[0.18em] transition-all duration-300"
               style={{
                 background: "linear-gradient(135deg, oklch(0.88 0.12 195), oklch(0.80 0.15 200), oklch(0.65 0.16 208))",
                 color: "oklch(0.07 0.005 260)",
@@ -272,34 +261,32 @@ export function Hero() {
             </button>
           </motion.div>
 
-          {/* Secondary */}
-          <motion.div
-            ref={btn2.ref}
-            onMouseMove={btn2.onMove}
-            onMouseLeave={btn2.onLeave}
-            animate={{ x: btn2.pos.x, y: btn2.pos.y }}
-            transition={{ type: "spring", stiffness: 200, damping: 20 }}
+          {/* Secondary — Download Resume */}
+          <a
+            href="/Maharajan D Konar.pdf"
+            download="Maharajan D Konar.pdf"
+            className="group flex items-center gap-2.5 px-9 py-4 rounded-full font-mono text-[11px] uppercase tracking-[0.18em] border transition-all duration-300"
+            style={{
+              borderColor: "oklch(0.80 0.15 200 / 0.30)",
+              color: "oklch(0.80 0.15 200)",
+              backdropFilter: "blur(12px)",
+            }}
+            onMouseEnter={(e) => {
+              const el = e.currentTarget as HTMLAnchorElement
+              el.style.borderColor = "oklch(0.80 0.15 200 / 0.65)"
+              el.style.background   = "oklch(0.80 0.15 200 / 0.06)"
+              el.style.boxShadow    = "0 0 20px oklch(0.80 0.15 200 / 0.18)"
+            }}
+            onMouseLeave={(e) => {
+              const el = e.currentTarget as HTMLAnchorElement
+              el.style.borderColor = "oklch(0.80 0.15 200 / 0.30)"
+              el.style.background   = "transparent"
+              el.style.boxShadow    = "none"
+            }}
           >
-            <button
-              onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
-              className="h-13 px-9 rounded-full font-mono text-[11px] uppercase tracking-[0.18em] border transition-all duration-300 hover:shadow-[0_0_20px_oklch(0.80_0.15_200/0.20)]"
-              style={{
-                borderColor: "oklch(0.80 0.15 200 / 0.30)",
-                color: "oklch(0.80 0.15 200)",
-                backdropFilter: "blur(12px)",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = "oklch(0.80 0.15 200 / 0.65)"
-                e.currentTarget.style.background   = "oklch(0.80 0.15 200 / 0.06)"
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = "oklch(0.80 0.15 200 / 0.30)"
-                e.currentTarget.style.background   = "transparent"
-              }}
-            >
-              Get in Touch
-            </button>
-          </motion.div>
+            <Download size={13} strokeWidth={1.5} className="group-hover:-translate-y-0.5 transition-transform duration-200" />
+            Download Resume
+          </a>
         </motion.div>
 
         {/* ── Social links ── */}

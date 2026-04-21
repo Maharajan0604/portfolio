@@ -106,8 +106,8 @@ export function Navbar() {
           {/* Right side: Resume (desktop) + Hamburger (mobile) */}
           <div className="flex items-center gap-2 flex-shrink-0">
             <a
-              href="/Maharajan D Konar.pdf"
-              download="Maharajan D Konar.pdf"
+              href="/MAHARAJAN-LATEST.pdf"
+              download="MAHARAJAN-LATEST.pdf"
               className="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-full text-[10.5px] font-mono uppercase tracking-[0.18em] border border-[oklch(0.80_0.15_200/0.25)] text-[oklch(0.80_0.15_200)] hover:border-[oklch(0.80_0.15_200/0.60)] hover:bg-[oklch(0.80_0.15_200/0.06)] hover:shadow-[0_0_16px_oklch(0.80_0.15_200/0.20)] transition-all duration-300"
             >
               <Download size={11} strokeWidth={2} />

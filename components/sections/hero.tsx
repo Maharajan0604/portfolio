@@ -263,8 +263,8 @@ export function Hero() {
 
           {/* Secondary — Download Resume */}
           <a
-            href="/Maharajan D Konar.pdf"
-            download="Maharajan D Konar.pdf"
+            href="/MAHARAJAN-LATEST.pdf"
+            download="MAHARAJAN-LATEST.pdf"
             className="group flex items-center gap-2.5 px-9 py-4 rounded-full font-mono text-[11px] uppercase tracking-[0.18em] border transition-all duration-300"
             style={{
               borderColor: "oklch(0.80 0.15 200 / 0.30)",

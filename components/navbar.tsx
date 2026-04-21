@@ -175,8 +175,8 @@ export function Navbar() {
           })}
 
           <a
-            href="/Maharajan D Konar.pdf"
-            download="Maharajan D Konar.pdf"
+            href="/MAHARAJAN-LATEST.pdf"
+            download="MAHARAJAN-LATEST.pdf"
             className="mt-3 flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-[11px] font-mono uppercase tracking-[0.18em] text-[oklch(0.80_0.15_200)] border border-[oklch(0.80_0.15_200/0.25)] bg-[oklch(0.80_0.15_200/0.05)] hover:bg-[oklch(0.80_0.15_200/0.10)] hover:border-[oklch(0.80_0.15_200/0.45)] transition-all duration-300"
           >
             <Download size={11} strokeWidth={2} />
